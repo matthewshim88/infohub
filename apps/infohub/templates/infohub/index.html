@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'login_reg/css/style.css' %}"media="screen" title="no title" charset="utf-8">
+    <script src="{% static 'infohub/js/script.js' %}" ></script>
+    <title>InfoHub</title>
+  </head>
+  <body>
+    <a href="{% url 'useradmin:logout' %}">Log out</a>
+    <div>
+      <h1>InfoHub at your services, {{ first_name }}</h1>
+    </div>
+  </body>
+</html>

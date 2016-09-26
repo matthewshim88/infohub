@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'login_reg/css/style.css' %}"media="screen" title="no title" charset="utf-8">
+    <title>Login and Registration Assigment</title>
+  </head>
+  <body>
+    <h2>Success! Welcome, {{ firstName }}!</h2>
+    {% for message in messages %}
+      <!-- Note: this assumes there is ever only one message -->
+      <p class="greenText">Successfully {{ message }}!</p>
+    {% endfor %}
+    <a href="{% url 'useradmin:logout' %}">Log out</a>
+  </body>
+</html>

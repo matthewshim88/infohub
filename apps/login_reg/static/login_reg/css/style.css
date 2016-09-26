@@ -1,0 +1,19 @@
+.error{
+  color: red;
+}
+.errors{
+  margin-top: 10px;
+  margin-left: 100px;
+  width: 350px;
+  border: 1px solid black;
+  font-size: 12px;
+}
+.btn{
+  background-color: darkblue;
+  color: white;
+  width: 60px;
+  height: 25px;
+}
+.greenText{
+  color: green;
+}
