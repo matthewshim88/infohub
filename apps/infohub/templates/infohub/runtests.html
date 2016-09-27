@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'infohub/css/style.css' %}"media="screen" title="no title" charset="utf-8">
+    <title>InfoHub tests</title>
+  </head>
+  <body>
+    <h2>Test Portal</h2>
+    <h4>Test Results</h4>
+    <table>
+      <tr>
+        <th>Test Name</th>
+        <th>Status</th>
+        <th>Run Time</th>
+      </tr>
+      {% for test in test_results %}
+        <tr>
+          <td>{{ test.name }}</td>
+          <td>{{ test.status }}</td>
+          <td>{{ test.run_time }}s</td>
+        </tr>
+      {% endfor %}
+    </table>
+    <h4>Most Recent Audit History</h4>
+    <table>
+      <tr>
+        <th>Action</th>
+        <th>User</th>
+        <th>When</th>
+      </tr>
+      {% for audit in audits %}
+        <tr>
+          <td>{{ audit.action }}</td>
+          <td>{{ audit.user.first_name }}</td>
+          <td>{{ audit.created_at }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

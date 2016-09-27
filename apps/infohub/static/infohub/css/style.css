@@ -1,3 +1,15 @@
 *{
-  outline: 1px dotted solid black;
+  /*outline: 1px dotted solid black;*/
+}
+tr:nth-child(odd){
+	background-color: azure;
+	padding: 5px;
+}
+tr{
+	background-color: aliceblue;
+	padding: 5px;
+}
+table{
+  border-spacing: 5px;
+  border: 1px solid black;
 }
