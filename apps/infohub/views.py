@@ -4,6 +4,8 @@ from .models import InfoSource, Audit
 from ..login_reg.models import User
 from django.contrib import messages
 import time
+import urllib2
+import json
 
 def index(request):
     if "userID" not in request.session:
@@ -12,11 +14,39 @@ def index(request):
 
     # User is logged in.
     userID = request.session['userID']
+
+    # Get stories from all user configured sources
+    stories = getInfoBing()
     context = {
-        "first_name" : User.objects.get(id = userID).first_name
+        "first_name" : User.objects.get(id = userID).first_name,
+        "stories" : stories
     }
+
     return render(request, 'infohub/index.html', context)
 
+def getInfoBing():
+    # Get the content from Bing
+    url = "https://api.cognitive.microsoft.com/bing/v5.0/news/?Category=World"
+    req = urllib2.Request(url)
+    req.add_header('Ocp-Apim-Subscription-Key', '5f3b95abf31f452f8a3c4cb27a2d39f7')
+    resp = urllib2.urlopen(req)
+    content = json.load(resp)
+
+    # Parse the content and normalize into InfoHub format.
+    stories = []
+    for story in content["value"]:
+        stories.append({
+            "source" : "Bing News",
+            "title" : story["name"],
+            "url" : story["url"],
+            "description" : story["description"] # TODO!! Color code user selected keywords
+        })
+
+    return stories
+
+def getInfoCNN():
+    #TODO: implement
+    pass
 
 ########## Tests ##########
 

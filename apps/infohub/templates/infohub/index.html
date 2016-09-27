@@ -10,7 +10,16 @@
   <body>
     <a href="{% url 'useradmin:logout' %}">Log out</a>
     <div>
-      <h1>InfoHub at your services, {{ first_name }}</h1>
+      <p>Hi, {{ first_name }}</p>
+      <h4>News</h4>
+      {% for story in stories %}
+        <p>
+          <b><a target="_blank" href="{{ story.url }}">{{ story.title }}</a></b>
+          <p>
+            <b>{{ story.source }}:</b> {{ story.description }}
+          </p>
+        </p>
+      {% endfor %}
     </div>
   </body>
 </html>
