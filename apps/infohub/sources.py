@@ -21,16 +21,16 @@ def getInfo(user_id):
     stories = []
     for source in user_sources:
         if source.source_type == "api" and source.location == "Bing":
-            stories.extend(getInfoBing(user_id, source.max_snippets))
+            stories.extend(getInfoBing(user_id, source.max_snippets, source.highlight_text))
             pass
         elif source.source_type == "api" and source.location == "CNN":
-            stories.extend(getInfoCNN(user_id, source.max_snippets))
+            stories.extend(getInfoCNN(user_id, source.max_snippets, source.highlight_text))
 
     # We have hit all the sources. Return the data.
     return stories
 
 # Retrieves info from Bing News.
-def getInfoBing(user_id, max_snippets):
+def getInfoBing(user_id, max_snippets, highlight_text):
     # Get the content from the Bing News Search API
     # See https://www.microsoft.com/cognitive-services/en-us/bing-news-search-api for details.
     url = "https://api.cognitive.microsoft.com/bing/v5.0/news/?Category=World"
@@ -39,6 +39,7 @@ def getInfoBing(user_id, max_snippets):
     req.add_header('Ocp-Apim-Subscription-Key', api_key)
     resp = urllib2.urlopen(req)
     content = json.load(resp)
+    print "DEBUG: Bing highlight: " + highlight_text
 
     # Parse the content and normalize into InfoHub format.
     stories = []
@@ -47,14 +48,15 @@ def getInfoBing(user_id, max_snippets):
             "source" : "Bing News",
             "title" : story["name"],
             "url" : story["url"],
-            "description" : story["description"] # TODO!! Color code user selected keywords
+            "description" : story["description"],
+            "highlight_text" : highlight_text
         })
 
     Audit.objects.audit(user_id, "Retrieved info from Bing")
     return stories
 
 # Retrieves info from CNN.
-def getInfoCNN(user_id, max_snippets):
+def getInfoCNN(user_id, max_snippets, highlight_text):
     # Get the content from CNN API.
     # See https://newsapi.org/cnn-api for details.
     base_url = "https://newsapi.org/v1/articles?source=cnn&sortBy=top"
@@ -63,8 +65,7 @@ def getInfoCNN(user_id, max_snippets):
     req = urllib2.Request(url)
     resp = urllib2.urlopen(req)
     content = json.load(resp)
-    print "DEBUG: From CNN"
-    print content
+    print "DEBUG: CNN highlight: " + highlight_text
 
     # Parse the content and normalize into InfoHub format.
     stories = []
@@ -73,19 +74,14 @@ def getInfoCNN(user_id, max_snippets):
             "source" : "CNN News", # Displaying the source is required by CNN if site is public.
             "title" : story["title"],
             "url" : story["url"],
-            "description" : story["description"] # TODO!! Color code user selected keywords
+            "description" : story["description"],
+            "highlight_text" : highlight_text
         })
 
     Audit.objects.audit(user_id, "Retrieved info from CNN")
     return stories
 
-def getInfoNPR(user_id, max_snippets):
+def getInfoNPR(user_id, max_snippets, highlight_text):
     #http://api.npr.org/query?id=1126&apiKey=MDI2ODkyNTcxMDE0NzQ5MzUxMTMxN2M1ZA000&format=json
     #TODO: Implement
     pass
-
-########## Helper functions ##########
-
-def highlightText(text, keyword):
-    #TODO: Add support for multiple keywords.
-    return text.replace(keyword, "<span class='highlight_text'>" + keyword + "</span>")

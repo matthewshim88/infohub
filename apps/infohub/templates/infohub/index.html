@@ -12,11 +12,24 @@
     <div>
       <p>Hi, {{ first_name }}</p>
       <h4>News</h4>
+      {% load tags %}
       {% for story in stories %}
         <p>
           <b><a target="_blank" href="{{ story.url }}">{{ story.title }}</a></b>
           <p>
-            <b>{{ story.source }}:</b> {{ story.description }}
+            <b>{{ story.source }}:</b>
+            <!-- Use the custom tag 'split' to split the description into words that
+            can then conditionally be highlighted using a span element with a CSS class.
+            This approach might be expensive, but using it for now. -->
+            {% with story.description|split_space as words %}
+              {% for word in words %}
+                {% if word == story.highlight_text %}
+                  <span class='highlight_text'>{{ word }}</span>
+                {% else %}
+                  {{ word }}
+                {% endif %}
+              {% endfor %}
+            {% endwith %}
           </p>
         </p>
       {% endfor %}

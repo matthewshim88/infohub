@@ -96,7 +96,7 @@ def runTests(user_id):
 
     # Retrieve data from Bing News.
     time_start = time.time()
-    result_ex = sources.getInfoBing(user_id, 5)
+    result_ex = sources.getInfoBing(user_id, 5, "placeholder")
     seconds = int(time.time() - time_start)
     if validResultEx(result_ex):
         status = "passed"
@@ -111,7 +111,7 @@ def runTests(user_id):
 
     # Retrieve data from CNN.
     time_start = time.time()
-    result_ex = sources.getInfoCNN(user_id, 5)
+    result_ex = sources.getInfoCNN(user_id, 5, "placeholder")
     seconds = int(time.time() - time_start)
     if validResultEx(result_ex):
         status = "passed"

@@ -20,5 +20,6 @@ table{
   color: darkgreen;
 }
 .highlight_text{
-  color: yellow;
+  color: black;
+  background-color:yellow;
 }

@@ -3,21 +3,12 @@ from django.core.urlresolvers import reverse
 from .models import InfoSource, Audit
 from ..login_reg.models import User
 from django.contrib import messages
-from django import template
+
 import time
 import urllib2
 import json
 import adminportal
 import sources
-
-register = template.Library()
-@register.filter(name='split')
-def split(value, arg):
-    return value.split(' ')
-
-@register.simple_tag
-def highlight(text, keyword):
-    return text.replace(keyword, "<span class='highlight_text'>" + keyword + "</span>")
 
 def index(request):
     if "userID" not in request.session:
