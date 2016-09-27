@@ -13,3 +13,12 @@ table{
   border-spacing: 5px;
   border: 1px solid black;
 }
+.error_text{
+  color: red;
+}
+.success_text{
+  color: darkgreen;
+}
+.highlight_text{
+  color: yellow;
+}

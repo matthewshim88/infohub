@@ -7,7 +7,7 @@
     <title>InfoHub tests</title>
   </head>
   <body>
-    <h2>Test Portal</h2>
+    <h2>InfoHub Admin Portal</h2>
     <h4>Test Results</h4>
     <table>
       <tr>
@@ -18,7 +18,11 @@
       {% for test in test_results %}
         <tr>
           <td>{{ test.name }}</td>
-          <td>{{ test.status }}</td>
+          {% if test.status == 'passed' %}
+            <td class='success_text'>{{ test.status }}</td>
+          {% else %}
+            <td class='error_text'>{{ test.status }}</td>
+          {% endif %}
           <td>{{ test.run_time }}s</td>
         </tr>
       {% endfor %}
