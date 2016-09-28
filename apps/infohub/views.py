@@ -35,3 +35,30 @@ def adminPortal(request):
         "audits" : adminportal.getAuditHistory(user_id)
     }
     return render(request, 'infohub/runtests.html', context)
+
+def show_profile(request):
+    user_id = request.session['userID']
+    currentSettings = {}
+    currentSettings["Bing"] = { "Enabled" : ""}
+    currentSettings["CNN"] = { "Enabled" : ""}
+    currentSettings["NPR"] = { "Enabled" : ""}
+
+    settings = InfoSource.objects.getActive(user_id)
+    for setting in settings:
+        currentSettings[setting.location] = {
+            "Enabled": "checked",
+            "highlight_text" : setting.highlight_text
+        }
+
+    context = {
+        "user": User.objects.get(id=user_id),
+        "settings": currentSettings
+    }
+    return render(request, 'infohub/profile.html', context)
+
+def set_preferences(request):
+    if request.method == "POST" and "userID" in request.session:
+        # print ("*" * 50)
+        # print request.POST
+        InfoSource.objects.set(request.POST, request.session["userID"])
+    return redirect(reverse('info:show_profile'))

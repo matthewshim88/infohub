@@ -18,15 +18,15 @@ def getInfo(user_id):
     user_sources = InfoSource.objects.getActive(user_id)
 
     # Loop and retrieve data from each source
-    stories = []
+    stories = {}
     for source in user_sources:
         if source.source_type == "api" and source.location == "Bing":
-            stories.extend(getInfoBing(user_id, source.max_snippets, source.highlight_text))
+            stories["Bing"] = getInfoBing(user_id, source.max_snippets, source.highlight_text)
             pass
         elif source.source_type == "api" and source.location == "CNN":
-            stories.extend(getInfoCNN(user_id, source.max_snippets, source.highlight_text))
+            stories["CNN"] = getInfoCNN(user_id, source.max_snippets, source.highlight_text)
         elif source.source_type == "api" and source.location == "NPR":
-            stories.extend(getInfoNPR(user_id, source.max_snippets, source.highlight_text))
+            stories["NPR"] = getInfoNPR(user_id, source.max_snippets, source.highlight_text)
 
     # We have hit all the sources. Return the data.
     return stories

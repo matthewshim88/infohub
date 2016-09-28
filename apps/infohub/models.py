@@ -6,6 +6,48 @@ from ..login_reg.models import User
 
 class InfoSourceMgr(models.Manager):
     # Adds a new source the user wants to use.
+    def set(self, data, user_id):
+        self.store_profile(data, user_id, "Bing")
+        self.store_profile(data, user_id, "CNN")
+        self.store_profile(data, user_id, "NPR")
+
+    #Because the form has 3 unique 'locations' and the InfoSource
+    #function can only take one location parameter, we need to "filter"
+    #and pass one location at a time - hence above, and the 'getNewForm' method
+    def store_profile(self, data, user_id, location):
+        source = InfoSource.objects.filter(location = location)
+        source_id = -1
+        if source:
+            source_id = source[0].id
+        newForm = self.getNewForm(data, location, source_id)
+
+        if len(source) > 0:
+            if newForm["location"]:
+                self.update(newForm, user_id)
+            else:
+                self.remove(newForm, user_id)
+        else:
+            if newForm["location"]:
+                self.add(newForm, user_id)
+
+        return
+
+    def getNewForm(self, data, location, source_id):
+        highlight = ""
+        if "highlight_text_" + location in data:
+            highlight = data["highlight_text_" + location]
+
+        loc = ""
+        if "location_" + location in data:
+            loc = data["location_" + location]
+
+        return {
+            "source_type" : "api",
+            "location" : loc,
+            "highlight_text" : highlight,
+            "source_id" : source_id
+        }
+
     def add(self, data, user_id):
         #TODO: Add check if source already exists.
         MAX_NUM_SNIPPETS = 5
@@ -24,7 +66,7 @@ class InfoSourceMgr(models.Manager):
     # Updates settings for an existing information source.
     def update(self, data, user_id):
         #TODO: Don't fail if source doesn't exist.
-        source = InfoSource.objects.get(id = data['source_id'])
+        source = InfoSource.objects.get(id = data["source_id"])
         source.source_type = data['source_type']
         source.location = data['location']
         source.active = True # Always set to True until we allow user to pause
@@ -39,7 +81,7 @@ class InfoSourceMgr(models.Manager):
     # NOTE: This could instead be implemented with just setting a Deleted bit to 1.
     def remove(self, data, user_id):
         #TODO: Fail silently if source doesn't exist.
-        InfoSource.objects.get(id = data['source_id']).delete()
+        InfoSource.objects.get(id = data["source_id"]).delete()
 
         Audit.objects.audit(user_id, "Removed source")
         return

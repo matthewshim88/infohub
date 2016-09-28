@@ -8,31 +8,81 @@
     <title>InfoHub</title>
   </head>
   <body>
-    <a href="{% url 'useradmin:logout' %}">Log out</a>
-    <div>
-      <p>Hi, {{ first_name }}</p>
-      <h4>News</h4>
-      {% load tags %}
-      {% for story in stories %}
-        <p>
-          <b><a target="_blank" href="{{ story.url }}">{{ story.title }}</a></b>
-          <p>
-            <b>{{ story.source }}:</b>
-            <!-- Use the custom tag 'split' to split the description into words that
-            can then conditionally be highlighted using a span element with a CSS class.
-            This approach might be expensive, but using it for now. -->
-            {% with story.description|split_space as words %}
-              {% for word in words %}
-                {% if word == story.highlight_text %}
-                  <span class='highlight_text'>{{ word }}</span>
-                {% else %}
-                  {{ word }}
-                {% endif %}
-              {% endfor %}
-            {% endwith %}
-          </p>
-        </p>
-      {% endfor %}
+    <div id="big_box">
+        <div class="header">
+            <div class="header_msg">
+                <h1>Hi, {{ first_name }}</h1>
+            </div>
+            <div class="nav_links">
+                <a href="/info/profile">Profile</a>
+                <a href="{% url 'useradmin:logout' %}">Logout</a>
+            </div>
+        </div>
+        <div class="news_box">
+            {% load tags %}
+            {% if stories.Bing %}
+            <h4>Bing News</h4>
+                {% for story in stories.Bing %}
+                  <a target="_blank" href="{{ story.url }}">{{ story.title }}</a>
+                  <p>
+                    <!-- Use the custom tag 'split' to split the description into words that
+                    can then conditionally be highlighted using a span element with a CSS class.
+                    This approach might be expensive, but using it for now. -->
+                    {% with story.description|split_space as words %}
+                      {% for word in words %}
+                        {% if word == story.highlight_text %}
+                          <span class='highlight_text'>{{ word }}</span>
+                        {% else %}
+                          {{ word }}
+                        {% endif %}
+                      {% endfor %}
+                    {% endwith %}
+                  </p>
+                {% endfor %}
+            {% endif %}
+            {% if stories.CNN %}
+            <h4>CNN</h4>
+                {% for story in stories.CNN %}
+                  <a target="_blank" href="{{ story.url }}">{{ story.title }}</a>
+                  <p>
+                    {{ story.source }}:
+                    <!-- Use the custom tag 'split' to split the description into words that
+                    can then conditionally be highlighted using a span element with a CSS class.
+                    This approach might be expensive, but using it for now. -->
+                    {% with story.description|split_space as words %}
+                      {% for word in words %}
+                        {% if word == story.highlight_text %}
+                          <span class='highlight_text'>{{ word }}</span>
+                        {% else %}
+                          {{ word }}
+                        {% endif %}
+                      {% endfor %}
+                    {% endwith %}
+                  </p>
+                {% endfor %}
+            {% endif %}
+            {% if stories.NPR %}
+            <h4>NPR</h4>
+                {% for story in stories.NPR %}
+                  <a target="_blank" href="{{ story.url }}">{{ story.title }}</a>
+                  <p>
+                    {{ story.source }}:
+                    <!-- Use the custom tag 'split' to split the description into words that
+                    can then conditionally be highlighted using a span element with a CSS class.
+                    This approach might be expensive, but using it for now. -->
+                    {% with story.description|split_space as words %}
+                      {% for word in words %}
+                        {% if word == story.highlight_text %}
+                          <span class='highlight_text'>{{ word }}</span>
+                        {% else %}
+                          {{ word }}
+                        {% endif %}
+                      {% endfor %}
+                    {% endwith %}
+                  </p>
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
   </body>
 </html>

@@ -1,6 +1,9 @@
 *{
   /*outline: 1px dotted solid black;*/
 }
+body{
+    font-family: sans-serif;
+}
 tr:nth-child(odd){
 	background-color: azure;
 	padding: 5px;
@@ -23,3 +26,84 @@ table{
   color: black;
   background-color:yellow;
 }
+/*####################*/
+/*## steve's styles ##*/
+/*####################*/
+.header{
+    padding: 10px;
+    border: 3px solid gray;
+    border-radius: 10px;
+    /*margin: 2px 0px 20px 0px;*/
+    margin: 0 auto;
+    margin-bottom: 20px;
+    width: 90%;
+}
+    .header_msg{
+        display: inline-block;
+        width: 60%;
+    }
+    .nav_links{
+        display: inline-block;
+        text-align: right;
+        width: 39%;
+    }
+        .nav_links a{
+            margin: 5px 5px 5px 5px;
+            padding: 5px;
+            border: 2px solid black;
+            border-radius: 5px;
+            color: black;
+            text-decoration: none;
+            background-color: lightgray;
+        }
+#api_form{
+    width: 30%;
+    display: inline-block;
+    margin: 10px 10px 10px 20px;
+    vertical-align: top;
+}
+    .c_box{
+        display: block;
+        margin: 10px;
+    }
+    .t_box{
+        display: block;
+        margin: 10px 10px 10px 25px;
+    }
+#user_info{
+    width: 30%;
+    display: inline-block;
+    vertical-align: top;
+    margin: 10px;
+}
+    #user_info h4{
+        display: inline-block;
+        margin: 0px;
+    }
+    #user_info p{
+        display: inline-block;
+        margin: 0px;
+    }
+    .user_field{
+        display: block;
+        margin: 10px;
+    }
+.news_box{
+    margin: 0 auto;
+    padding: 10px;
+    border: 2px solid gray;
+    border-radius: 10px;
+    width: 80%;
+    height: 600px;
+    overflow-y: scroll;
+    background-color: lightgray;
+}
+    .news_box h4{
+        margin: 5px 5px 5px 10px;
+    }
+    .news_box a{
+        margin: 5px 10px 2px 20px;
+    }
+    .news_box p{
+        margin: 5px 10px 25px 25px;
+    }

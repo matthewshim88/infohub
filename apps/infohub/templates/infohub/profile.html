@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Info Hub Profile</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'infohub/css/style.css' %}"media="screen" title="no title" charset="utf-8">
+        <script src="{% static 'infohub/js/script.js' %}" ></script>
+    </head>
+    <body>
+        <div class="header">
+            <div class="header_msg">
+                <h1>{{user.first_name}}'s Profile Page</h1>
+            </div>
+            <div class="nav_links">
+                <a href="/info">Home</a>
+                <a href="{% url 'useradmin:logout' %}">Logout</a>
+            </div>
+        </div>
+        <div id="api_form">
+            <h3>Select your News source(s)</h3>
+
+            <form action="/info/profile/set" method="post">
+                {% csrf_token %}
+                <span class=c_box><input type="checkbox" name="location_Bing" value="Bing" {{settings.Bing.Enabled}}>Bing</span>
+                <span class=t_box>Highlight: <input type="text" name="highlight_text_Bing" value="{{settings.Bing.highlight_text}}"></span>
+
+                <span class=c_box><input type="checkbox" name="location_CNN" value="CNN" {{settings.CNN.Enabled}}>CNN</span>
+                <span class=t_box>Highlight: <input type="text" name="highlight_text_CNN" value="{{settings.CNN.highlight_text}}"></span>
+
+                <span class=c_box><input type="checkbox" name="location_NPR" value="NPR" {{settings.NPR.Enabled}}>NPR</span>
+                <span class=t_box>Highlight: <input type="text" name="highlight_text_NPR" value="{{settings.NPR.highlight_text}}"></span>
+
+                <span class=c_box><input type="submit" name="submit" value="save settings">
+            </form>
+        </div>
+        <div id="user_info">
+            <h3>User Info</h3>
+            <span class="user_field"><h4>Name: </h4><p>{{user.first_name}} {{user.last_name}}</p></span>
+            <span class="user_field"><h4>Email: </h4><p>{{user.email}}</p></span>
+            <span class="user_field"><h4>Birthday: </h4><p>{{user.birthday}}</p></span>
+
+
+
+        </div>
+    </body>
+</html>
