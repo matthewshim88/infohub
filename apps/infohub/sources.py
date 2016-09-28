@@ -25,6 +25,8 @@ def getInfo(user_id):
             pass
         elif source.source_type == "api" and source.location == "CNN":
             stories.extend(getInfoCNN(user_id, source.max_snippets, source.highlight_text))
+        elif source.source_type == "api" and source.location == "NPR":
+            stories.extend(getInfoNPR(user_id, source.max_snippets, source.highlight_text))
 
     # We have hit all the sources. Return the data.
     return stories
@@ -39,7 +41,6 @@ def getInfoBing(user_id, max_snippets, highlight_text):
     req.add_header('Ocp-Apim-Subscription-Key', api_key)
     resp = urllib2.urlopen(req)
     content = json.load(resp)
-    print "DEBUG: Bing highlight: " + highlight_text
 
     # Parse the content and normalize into InfoHub format.
     stories = []
@@ -65,7 +66,6 @@ def getInfoCNN(user_id, max_snippets, highlight_text):
     req = urllib2.Request(url)
     resp = urllib2.urlopen(req)
     content = json.load(resp)
-    print "DEBUG: CNN highlight: " + highlight_text
 
     # Parse the content and normalize into InfoHub format.
     stories = []
@@ -81,7 +81,25 @@ def getInfoCNN(user_id, max_snippets, highlight_text):
     Audit.objects.audit(user_id, "Retrieved info from CNN")
     return stories
 
+# Retrieves info from NPR.
 def getInfoNPR(user_id, max_snippets, highlight_text):
     #http://api.npr.org/query?id=1126&apiKey=MDI2ODkyNTcxMDE0NzQ5MzUxMTMxN2M1ZA000&format=json
-    #TODO: Implement
-    pass
+    base_url = "http://api.npr.org/query?id=1003&format=json"
+    api_key = "MDI2ODkyNTcxMDE0NzQ5MzUxMTMxN2M1ZA000"
+    url = base_url + "&apiKey=" + api_key
+    req = urllib2.Request(url)
+    resp = urllib2.urlopen(req)
+    content = json.load(resp)
+
+    stories = []
+    for story in content["list"]["story"][:max_snippets]:
+        stories.append({
+            "source" : "NPR",
+            "title" : story["title"]["$text"],
+            "url" : story["link"][0]["$text"],
+            "description" : story["teaser"]["$text"],
+            "highlight_text" : highlight_text
+        })
+
+    Audit.objects.audit(user_id, "Retrieved info from NPR")
+    return stories

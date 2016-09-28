@@ -124,10 +124,46 @@ def runTests(user_id):
         "run_time" : str(seconds)
     })
 
+    # Retrieve data from NPR.
+    time_start = time.time()
+    result_ex = sources.getInfoNPR(user_id, 5, "placeholder")
+    seconds = int(time.time() - time_start)
+    if validResultEx(result_ex):
+        status = "passed"
+    else:
+        status = "failed"
+
+    test_results.append({
+        "name" : "getInfoNPR",
+        "status" : status,
+        "run_time" : str(seconds)
+    })
     # Temporary code to insert CNN as source until this can be done in the UI.
     # data = {
     #     "source_type": "api",
     #     "location" : "CNN",
+    #     "highlight_text" : "Trump"
+    # }
+
+    # Add an info source
+    # time_start = time.time()
+    # result = InfoSource.objects.add(data, user_id)
+
+    # Temporary code to insert CNN as source until this can be done in the UI.
+    # data = {
+    #     "source_type": "api",
+    #     "location" : "NPR",
+    #     "highlight_text" : "Trump"
+    # }
+
+    # Add an info source
+    # time_start = time.time()
+    # result = InfoSource.objects.add(data, user_id)
+
+    # Temporary code to insert CNN as source until this can be done in the UI.
+    # data = {
+    #     "source_type": "api",
+    #     "location" : "Bing",
     #     "highlight_text" : "Trump"
     # }
     #
