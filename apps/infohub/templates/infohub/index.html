@@ -10,40 +10,42 @@
     <link rel="stylesheet" href="{% static 'infohub/css/bootstrap.min.css' %}"media="screen" title="bootstrap" charset="utf-8">
     <title>InfoHub</title>
     <meta name="viewport" content="initial-scale=0.5">
-    <style type=text/css>
-      html, body{
-        height: 50%;
-        margin:0;
-        padding:0;
-      }
-      #map{
-        height:50%;
-      }
-    </style>
   </head>
   <body>
     <div id="big_box">
         <div class="header">
             <div class="header_msg">
-                <h1>Hi, {{ first_name }}</h1>
+                <h2>Hi, {{ first_name }}</h2>
             </div>
-            <div class="nav_links">
+            <nav class="nav_links">
                 <a href="/info/profile">Profile</a>
                 <a href="{% url 'useradmin:logout' %}">Logout</a>
+            </nav>
+        </div>
+        <div id="home_content">
+            <div class="news_box">
+              <div id="alert" hidden="true">
+              </div>
+              <div id="loader">
+                <h4>Gathering your news...</h4>
+                <i class="fa fa-circle-o-notch fa-spin" style="font-size:100px;color:blue"></i>
+              </div>
+              <img id="npr_def_img" hidden=true src="{% static 'infohub/img/npr-logo.png' %}">
+            </div>
+            <div id="weather_map">
+                <div id="map"></div>
+                <div id="weather">
+                    <h4>Weather</h4>
+                    <span class="weather_title"><p>Status</p></span>
+                    <p>{{weather_status}}</p>
+                    <span class="weather_title"><p>Temperature</p></span>
+                    <p>{{weather_temp}}&deg; F</p>
+                    <span class="weather_title"><p>Humidity</p></span>
+                    <p>{{weather_humidity}}%</p>
+                </div>
             </div>
         </div>
-        <div class="news_box">
-          <div id="alert" hidden="true">
-          </div>
-          <div id="loader">
-            <h4>Gathering your news...</h4>
-            <i class="fa fa-circle-o-notch fa-spin" style="font-size:100px;color:blue"></i>
-          </div>
-          <img id="npr_def_img" hidden=true src="{% static 'infohub/img/npr-logo.png' %}">
-        </div>
     </div>
-
-    <div id="map"></div>
     <script>
       var map;
 
