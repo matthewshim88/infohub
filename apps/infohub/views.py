@@ -34,7 +34,8 @@ def index(request):
         "first_name" : User.objects.get(id = userID).first_name,
         "stories" : [],
         "city": User.objects.get(id=userID).city,
-        "weather" : current_weather
+        "weather" : current_weather,
+        "coords" : [current_weather[5], current_weather[6]]
     }
 
     return render(request, 'infohub/index.html', context)

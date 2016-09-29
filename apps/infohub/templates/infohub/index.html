@@ -9,6 +9,17 @@
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'infohub/css/bootstrap.min.css' %}"media="screen" title="bootstrap" charset="utf-8">
     <title>InfoHub</title>
+    <meta name="viewport" content="initial-scale=0.5">
+    <style type=text/css>
+      html, body{
+        height: 50%;
+        margin:0;
+        padding:0;
+      }
+      #map{
+        height:50%;
+      }
+    </style>
   </head>
   <body>
     <div id="big_box">
@@ -30,5 +41,21 @@
           </div>
         </div>
     </div>
+
+    <div id="map"></div>
+    <script>
+      var map;
+
+      function initMap(){
+        var coords = {{ coords }};
+
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat:coords[0], lng:coords[1]},
+            zoom: 10
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCN903LgBdd3vb0hD7qQvQveysWIRuv0_I&callback=initMap" async defer>
+    </script>
   </body>
 </html>
