@@ -32,10 +32,23 @@ $(document).ready(
           $(div).append("<h4>" + location + "</h4>");
           for (var i = 0; i < stories[location].length; i++)
           {
+              // Multiple keywords can be highlighted, so handle them separately.
+              // Only a comma is currently supported as a keyword delimiter.
+              var highlights = []
+              if (stories[location][i].highlight_text)
+                highlights = stories[location][i].highlight_text.split(",")
+
               // Build the html markup representing the story.
               var html = "<a target='_blank' href=" + stories[location][i].url + ">" + stories[location][i].title + "</a>";
               html += "<p>";
-              html += stories[location][i].description.replace(stories[location][i].highlight_text, "<span class='highlight_text'>" + stories[location][i].highlight_text + "</span>");
+
+              // Highlight each specified keyword.
+              for(var k = 0; k < highlights.length; k++)
+              {
+                var regex = new RegExp(highlights[k], 'gi' );
+                html += stories[location][k].description.replace(regex, "<span class='highlight_text'>" + highlights[k] + "</span>");
+              }
+
               html += "</p>"
               // Add the above html into the DOM.
               $(div).append(html)
