@@ -13,33 +13,20 @@
 </head>
 <body>
 	<div id='mainBox' style="background-image: url({% static 'login_reg/images/road_mountain_landscape.jpg' %});">
-      <div class='container mainLogo'>
-        <h1>Insert Logo Here</h1>
-      </div>
-      <div class='container login'>
-        <h3>Login</h3>
-        <form action="{% url 'useradmin:login' %}" method="POST">
-          {% csrf_token %}
-          <p>Email: <input type="text" name="Email"></p>
-          <p>Password: <input type="password" name="Password"></p>
-          <input class="btn btn-primary" type="submit" name="submit" value="Log in">
-        </form>
-      </div>
-      <div class='container registration'>
-        <h3>Registration</h3>
-        <form action="{% url 'useradmin:register' %}" method="POST">
-          {% csrf_token %}
-    			<p align="right">First Name: <input type="text" name="First Name"></p>
-    			<p align="right">Last Name: <input type="text" name="Last Name"></p>
-    			<p align="right">Email: <input type="text" name="Email"></p>
-          <p align="right">City: <input type="text" name="City"></p>
-    			<p align="right">Password: <input type="password" name="Password"></p>
-    			<p align="right">Confirm Password: <input type="password" name="Confirmed Password"></p>
-          <p align="right">Birthday: <input type="date" name="Birthday"></p>
-    			<input class="btn btn-primary" type="submit" name="submit" value="Register">
-    		</form>
+    <div id='main_content'>
+        <div class='container mainLogo' style="background-image: url({% static 'login_reg/images/infohub_logo.png' %});"></div>
+        <div class='container login'>
+          <h3>Login</h3>
+          <form action="{% url 'useradmin:login' %}" method="POST">
+            {% csrf_token %}
+            <p>Email: <input type="text" name="Email"></p>
+            <p>Password: <input type="password" name="Password"></p>
+            <input class="btn btn-primary" type="submit" name="submit" value="Log in">
+          </form>
+        </div>
         {% if messages %}
-          <div class="errors">
+          <div class="container errors">
+            <h3> Errors </h3>
             <ul>
               {% for message in messages %}
                 <li class="error">{{ message }}</li>
@@ -47,6 +34,20 @@
             </ul>
           </div>
         {% endif %}
+        <div class='container registration'>
+          <h3>Registration</h3>
+          <form action="{% url 'useradmin:register' %}" method="POST">
+            {% csrf_token %}
+      			<p align="right">First Name: <input type="text" name="First Name"></p>
+      			<p align="right">Last Name: <input type="text" name="Last Name"></p>
+      			<p align="right">Email: <input type="text" name="Email"></p>
+            <p align="right">City: <input type="text" name="City"></p>
+      			<p align="right">Password: <input type="password" name="Password"></p>
+      			<p align="right">Confirm Password: <input type="password" name="Confirmed Password"></p>
+            <p align="right">Birthday: <input type="date" name="Birthday"></p>
+      			<input class="btn btn-primary" type="submit" name="submit" value="Register">
+      		</form>
+        </div>
       </div>
 	</div>
 </body>
