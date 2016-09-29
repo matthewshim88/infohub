@@ -4,7 +4,9 @@
     <meta charset="utf-8">
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'infohub/css/style.css' %}"media="screen" title="no title" charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="{% static 'infohub/js/script.js' %}" ></script>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
     <title>InfoHub</title>
   </head>
   <body>
@@ -19,69 +21,10 @@
             </div>
         </div>
         <div class="news_box">
-            {% load tags %}
-            {% if stories.Bing %}
-            <h4>Bing News</h4>
-                {% for story in stories.Bing %}
-                  <a target="_blank" href="{{ story.url }}">{{ story.title }}</a>
-                  <p>
-                    <!-- Use the custom tag 'split' to split the description into words that
-                    can then conditionally be highlighted using a span element with a CSS class.
-                    This approach might be expensive, but using it for now. -->
-                    {% with story.description|split_space as words %}
-                      {% for word in words %}
-                        {% if word == story.highlight_text %}
-                          <span class='highlight_text'>{{ word }}</span>
-                        {% else %}
-                          {{ word }}
-                        {% endif %}
-                      {% endfor %}
-                    {% endwith %}
-                  </p>
-                {% endfor %}
-            {% endif %}
-            {% if stories.CNN %}
-            <h4>CNN</h4>
-                {% for story in stories.CNN %}
-                  <a target="_blank" href="{{ story.url }}">{{ story.title }}</a>
-                  <p>
-                    {{ story.source }}:
-                    <!-- Use the custom tag 'split' to split the description into words that
-                    can then conditionally be highlighted using a span element with a CSS class.
-                    This approach might be expensive, but using it for now. -->
-                    {% with story.description|split_space as words %}
-                      {% for word in words %}
-                        {% if word == story.highlight_text %}
-                          <span class='highlight_text'>{{ word }}</span>
-                        {% else %}
-                          {{ word }}
-                        {% endif %}
-                      {% endfor %}
-                    {% endwith %}
-                  </p>
-                {% endfor %}
-            {% endif %}
-            {% if stories.NPR %}
-            <h4>NPR</h4>
-                {% for story in stories.NPR %}
-                  <a target="_blank" href="{{ story.url }}">{{ story.title }}</a>
-                  <p>
-                    {{ story.source }}:
-                    <!-- Use the custom tag 'split' to split the description into words that
-                    can then conditionally be highlighted using a span element with a CSS class.
-                    This approach might be expensive, but using it for now. -->
-                    {% with story.description|split_space as words %}
-                      {% for word in words %}
-                        {% if word == story.highlight_text %}
-                          <span class='highlight_text'>{{ word }}</span>
-                        {% else %}
-                          {{ word }}
-                        {% endif %}
-                      {% endfor %}
-                    {% endwith %}
-                  </p>
-                {% endfor %}
-            {% endif %}
+          <div id="loader">
+            <h4>Gathering your news...</h4>
+            <i class="fa fa-circle-o-notch fa-spin" style="font-size:100px;color:blue"></i>
+          </div>
         </div>
     </div>
   </body>

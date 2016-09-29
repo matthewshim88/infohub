@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from .models import InfoSource, Audit
 from ..login_reg.models import User
 from django.contrib import messages
+from django.http import HttpResponse
 
 import time
 import urllib2
@@ -20,9 +21,6 @@ def index(request):
     userID = request.session['userID']
     # userCity = request.session['userCity']
 
-    # Get stories from all user configured sources
-    stories = sources.getInfo(userID)
-
     #questionable....maybe use session? Up for discussion
     current_weather = {}
     try:
@@ -31,15 +29,29 @@ def index(request):
         # This might fail due to an API key issue.
         # Ignoring errors for now.
         pass;
-    
+
     context = {
         "first_name" : User.objects.get(id = userID).first_name,
-        "stories" : stories,
+        "stories" : [],
         "city": User.objects.get(id=userID).city,
         "weather" : current_weather
     }
 
     return render(request, 'infohub/index.html', context)
+
+# Gets the articles for the user's selected sources.
+def getInfo(request):
+    if "userID" not in request.session:
+        # Prevent user from going to the success page if not logged in.
+        return redirect(reverse('useradmin:index'))
+
+    user_id = request.session['userID']
+    stories = sources.getInfo(user_id)
+    context = {
+        "first_name" : user_id,
+        "stories" : stories
+    }
+    return HttpResponse(json.dumps(stories), content_type = "application/json")
 
 # Runs unit tests and retrieves audit history for the admin portal.
 def adminPortal(request):

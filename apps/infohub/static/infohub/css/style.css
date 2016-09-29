@@ -1,6 +1,13 @@
 *{
   /*outline: 1px dotted solid black;*/
 }
+i{
+  /*Controls the loading spinner*/
+  opacity: 0.2;
+}
+#loader {
+  /*margin-left: 200px;*/
+}
 body{
     font-family: sans-serif;
 }
