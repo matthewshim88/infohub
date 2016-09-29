@@ -37,58 +37,112 @@ table{
 /*## steve's styles ##*/
 /*####################*/
 .header{
-    padding: 10px;
-    border: 3px solid gray;
-    border-radius: 10px;
+    /*padding: 10px;*/
+    /*border: 3px solid gray;*/
+    background: linear-gradient(rgb(247,247,247),rgb(224,224,224));
+    border: 1px solid gray;
+
+    border-radius: 5px;
     /*margin: 2px 0px 20px 0px;*/
     margin: 0 auto;
     margin-bottom: 20px;
-    width: 90%;
+    width: 60%;
+    min-width: 315px;
 }
     .header_msg{
-        display: inline-block;
-        width: 60%;
+        /*display: inline-block;*/
+        width: 100%;
+        /*margin: 0 auto;*/
     }
+        .header_msg h2{
+            margin: 10px 5px 2px 10px;
+            font-weight: normal;
+        }
     .nav_links{
-        display: inline-block;
+        /*display: inline-block;
         text-align: right;
-        width: 39%;
+        width: 39%;*/
+        width: 100%;
+    	height: 39px;
+    	/*display:inline-block;*/
+    	color: rgb(162,152,150);
+    	/*padding: 0px;*/
+    	text-align: right;
+    	background: linear-gradient(rgb(247,247,247),rgb(224,224,224));
+    	border-top: 1px solid rgb(225,225,225);
+    	border-radius: 0px 0px 5px 5px;
+    	/*margin-bottom: 10px;*/
+        /*margin: 0 auto;*/
     }
         .nav_links a{
-            margin: 5px 5px 5px 5px;
+            /*margin: 5px 5px 5px 5px;
             padding: 5px;
             border: 2px solid black;
             border-radius: 5px;
             color: black;
             text-decoration: none;
-            background-color: lightgray;
+            background-color: lightgray;*/
+            display: inline-block;
+    		color: black;
+    		font-weight: bold;
+    		margin: 0px;
+    		border-left: 1px solid lightgray;
+    		vertical-align: top;
+    		height: 27px;
+    		padding: 12px 10px 0px 10px;
         }
 #user_content{
     margin: 0 auto;
-    width: 85%;
-    outline: 1px solid black;
+    width: 60%;
+    /*outline: 1px solid black;*/
     text-align: center;
 }
 #api_form{
-    width: 30%;
+    width: 45%;
+    min-width: 255px;
     display: inline-block;
-    margin: 10px 10px 10px 20px;
+    margin: 10px 10px 10px 10px;
     vertical-align: top;
+    border: 1px solid gray;
+    border-radius: 10px;
+    height: 300px;
+    text-align: left;
 }
+    #api_form h3{
+        background: linear-gradient(rgb(247,247,247),rgb(224,224,224));
+        margin: 0;
+        padding: 20px 20px 20px 20px;
+        border-bottom: 1px solid gray;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
     .c_box{
         display: block;
-        margin: 10px;
+        margin: 10px 10px 10px 30px;
+
     }
     .t_box{
         display: block;
-        margin: 10px 10px 10px 25px;
+        margin: 10px 10px 10px 40px;
     }
 #user_info{
-    width: 30%;
+    width: 45%;
+    min-width: 255px;
     display: inline-block;
     vertical-align: top;
     margin: 10px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    height: 300px;
 }
+    #user_info h3{
+        background: linear-gradient(rgb(247,247,247),rgb(224,224,224));
+        margin: 0;
+        padding: 20px 20px 20px 20px;
+        border-bottom: 1px solid gray;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
     #user_info h4{
         display: inline-block;
         margin: 0px;

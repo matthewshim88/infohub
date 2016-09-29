@@ -13,12 +13,12 @@
     <div id="big_box">
         <div class="header">
             <div class="header_msg">
-                <h1>Hi, {{ first_name }}</h1>
+                <h2>Hi, {{ first_name }}</h2>
             </div>
-            <div class="nav_links">
+            <nav class="nav_links">
                 <a href="/info/profile">Profile</a>
                 <a href="{% url 'useradmin:logout' %}">Logout</a>
-            </div>
+            </nav>
         </div>
         <div class="news_box">
           <div id="loader">
