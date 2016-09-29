@@ -1,4 +1,4 @@
-.error{
+/*.error{
   color: red;
 }
 .errors{
@@ -8,12 +8,14 @@
   border: 1px solid black;
   font-size: 12px;
 }
-.btn{
+/*.btn{
   background-color: darkblue;
   color: white;
   width: 60px;
   height: 25px;
-}
-.greenText{
+}*/
+/*.greenText{
   color: green;
-}
+}**/
+
+/*Merged from steve styles below*/
