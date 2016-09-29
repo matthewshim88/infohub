@@ -24,6 +24,7 @@ class UserManager(models.Manager):
                     last_name = data['Last Name'],
                     email = data['Email'],
                     password = bcrypt.hashpw(data['Password'].encode(), bcrypt.gensalt()),
+                    city = data['City'],
                     birthday = data['Birthday']
                 )
 
@@ -66,6 +67,7 @@ class UserManager(models.Manager):
         self.validatePasswords(data, response)
         self.validateEmail(data, response)
         self.validateBirthday(data, response)
+        self.validateCity(data, response)
 
         return response
 
@@ -101,6 +103,10 @@ class UserManager(models.Manager):
         if data["Birthday"] < MIN_BIRTHDAY or data["Birthday"] > MAX_BIRTHDAY:
             errors.append("Invalid birthday.")
 
+    def validateCity(self, data, errors):
+        if len(data["City"]) < 1:
+            errors.append("City can't be blank")
+
     ####### Validation Helper Methods Ends #######
 
 
@@ -110,6 +116,7 @@ class User(models.Model):
     email = models.EmailField(max_length=255)
     password = models.CharField(max_length=255)
     birthday = models.DateField()
+    city = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

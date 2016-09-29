@@ -9,6 +9,7 @@ import urllib2
 import json
 import adminportal
 import sources
+import weather
 
 def index(request):
     if "userID" not in request.session:
@@ -17,12 +18,19 @@ def index(request):
 
     # User is logged in.
     userID = request.session['userID']
+    # userCity = request.session['userCity']
 
     # Get stories from all user configured sources
     stories = sources.getInfo(userID)
+
+    #questionable....maybe use session? Up for discussion
+    current_weather = weather.getWeather(User.objects.get(id=userID).city)
+
     context = {
         "first_name" : User.objects.get(id = userID).first_name,
-        "stories" : stories
+        "stories" : stories,
+        "city": User.objects.get(id=userID).city,
+        "weather" : current_weather
     }
 
     return render(request, 'infohub/index.html', context)
