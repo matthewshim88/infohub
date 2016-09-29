@@ -66,9 +66,9 @@ def adminPortal(request):
 def show_profile(request):
     user_id = request.session['userID']
     currentSettings = {}
-    currentSettings["Bing"] = { "Enabled" : ""}
-    currentSettings["CNN"] = { "Enabled" : ""}
-    currentSettings["NPR"] = { "Enabled" : ""}
+    currentSettings["Bing"] = { "Enabled" : "" }
+    currentSettings["CNN"] = { "Enabled" : "" }
+    currentSettings["NPR"] = { "Enabled" : "" }
 
     settings = InfoSource.objects.getActive(user_id)
     for setting in settings:

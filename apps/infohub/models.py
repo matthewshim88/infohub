@@ -15,7 +15,7 @@ class InfoSourceMgr(models.Manager):
     #function can only take one location parameter, we need to "filter"
     #and pass one location at a time - hence above, and the 'getNewForm' method
     def store_profile(self, data, user_id, location):
-        source = InfoSource.objects.filter(location = location)
+        source = InfoSource.objects.filter(location = location, user_id = user_id)
         source_id = -1
         if source:
             source_id = source[0].id
