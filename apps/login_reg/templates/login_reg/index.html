@@ -4,41 +4,50 @@
 <head>
   <meta charset="utf-8">
   {% load staticfiles %}
-  <link rel="stylesheet" href="{% static 'login_reg/css/style.css' %}"media="screen" title="no title" charset="utf-8">
+
+  <!-- <link rel="stylesheet" href="{% static 'login_reg/css/style.css' %}"media="screen" title="no title" charset="utf-8"> -->
+  <link rel="stylesheet" href="{% static 'login_reg/css/bootstrap.min.css' %}"media="screen" title="bootstrap" charset="utf-8">
   <!-- <script type="text/javascript" src='http://code.jquery.com/jquery-1.10.2.min.js'></script> -->
   <!-- <script src="{% static 'login_reg/js/script.js' %}"></script> -->
   <title>Email and Registrations Assignment</title>
 </head>
 <body>
-	<div>
-    <h4>Registration</h4>
-    <form action="{% url 'useradmin:register' %}" method="POST">
-      {% csrf_token %}
-			<p>First Name: <input type="text" name="First Name"></p>
-			<p>Last Name: <input type="text" name="Last Name"></p>
-			<p>Email: <input type="text" name="Email"></p>
-      <p>City: <input type="text" name="City"></p>
-			<p>Password: <input type="password" name="Password"></p>
-			<p>Confirm Password: <input type="password" name="Confirmed Password"></p>
-      <p>Birthday: <input type="date" name="Birthday"></p>
-			<input class="btn" type="submit" name="submit" value="Register">
-		</form>
-    {% if messages %}
-      <div class="errors">
-        <ul>
-          {% for message in messages %}
-            <li class="error">{{ message }}</li>
-          {% endfor %}
-        </ul>
+	<div id='mainBox' style="background-image: url({% static 'login_reg/images/road_mountain_landscape.jpg' %});">
+      <div class='container mainLogo'>
+        <h1>Insert Logo Here</h1>
       </div>
-    {% endif %}
-    <h4>Login</h4>
-		<form action="{% url 'useradmin:login' %}" method="POST">
-      {% csrf_token %}
-			<p>Email: <input type="text" name="Email"></p>
-			<p>Password: <input type="password" name="Password"></p>
-			<input class="btn" type="submit" name="submit" value="Log in">
-		</form>
+      <div class='container login'>
+        <h3>Login</h3>
+        <form action="{% url 'useradmin:login' %}" method="POST">
+          {% csrf_token %}
+          <p>Email: <input type="text" name="Email"></p>
+          <p>Password: <input type="password" name="Password"></p>
+          <input class="btn btn-primary" type="submit" name="submit" value="Log in">
+        </form>
+      </div>
+      <div class='container registration'>
+        <h3>Registration</h3>
+        <form action="{% url 'useradmin:register' %}" method="POST">
+          {% csrf_token %}
+    			<p align="right">First Name: <input type="text" name="First Name"></p>
+    			<p align="right">Last Name: <input type="text" name="Last Name"></p>
+    			<p align="right">Email: <input type="text" name="Email"></p>
+          <p align="right">City: <input type="text" name="City"></p>
+    			<p align="right">Password: <input type="password" name="Password"></p>
+    			<p align="right">Confirm Password: <input type="password" name="Confirmed Password"></p>
+          <p align="right">Birthday: <input type="date" name="Birthday"></p>
+    			<input class="btn btn-primary" type="submit" name="submit" value="Register">
+    		</form>
+        {% if messages %}
+          <div class="errors">
+            <ul>
+              {% for message in messages %}
+                <li class="error">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
 	</div>
 </body>
 </html>
