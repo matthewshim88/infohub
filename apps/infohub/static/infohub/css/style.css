@@ -63,6 +63,12 @@ table{
             text-decoration: none;
             background-color: lightgray;
         }
+#user_content{
+    margin: 0 auto;
+    width: 85%;
+    outline: 1px solid black;
+    text-align: center;
+}
 #api_form{
     width: 30%;
     display: inline-block;
