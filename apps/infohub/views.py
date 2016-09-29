@@ -84,7 +84,5 @@ def show_profile(request):
 
 def set_preferences(request):
     if request.method == "POST" and "userID" in request.session:
-        # print ("*" * 50)
-        # print request.POST
         InfoSource.objects.set(request.POST, request.session["userID"])
-    return redirect(reverse('info:show_profile'))
+    return redirect(reverse('info:index'))
