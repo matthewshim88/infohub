@@ -4,35 +4,44 @@
     <meta charset="utf-8">
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'infohub/css/style.css' %}"media="screen" title="no title" charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="{% static 'infohub/js/script.js' %}" ></script>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
     <title>InfoHub</title>
   </head>
   <body>
     <a href="{% url 'useradmin:logout' %}">Log out</a>
     <div>
       <p>Hi, {{ first_name }}</p>
-      <h4>News</h4>
-      {% load tags %}
-      {% for story in stories %}
-        <p>
-          <b><a target="_blank" href="{{ story.url }}">{{ story.title }}</a></b>
+      <div id="news">
+        {% load tags %}
+        {% for story in stories %}
           <p>
-            <b>{{ story.source }}:</b>
-            <!-- Use the custom tag 'split' to split the description into words that
-            can then conditionally be highlighted using a span element with a CSS class.
-            This approach might be expensive, but using it for now. -->
-            {% with story.description|split_space as words %}
-              {% for word in words %}
-                {% if word == story.highlight_text %}
-                  <span class='highlight_text'>{{ word }}</span>
-                {% else %}
-                  {{ word }}
-                {% endif %}
-              {% endfor %}
-            {% endwith %}
+            <b><a target="_blank" href="{{ story.url }}">{{ story.title }}</a></b>
+            <p>
+              <b>{{ story.source }}:</b>
+              <!-- Use the custom tag 'split' to split the description into words that
+              can then conditionally be highlighted using a span element with a CSS class.
+              This approach might be expensive, but using it for now. -->
+              {% with story.description|split_space as words %}
+                {% for word in words %}
+                  {% if word == story.highlight_text %}
+                    <span class='highlight_text'>{{ word }}</span>
+                  {% else %}
+                    {{ word }}
+                  {% endif %}
+                {% endfor %}
+              {% endwith %}
+            </p>
           </p>
-        </p>
-      {% endfor %}
+        {% endfor %}
+      </div>
+      <div id="ajax_news">
+      </div>
+    </div>
+    <div id="loader">
+      <h4>Gathering your news...</h4>
+      <i class="fa fa-circle-o-notch fa-spin" style="font-size:100px;color:blue"></i>
     </div>
   </body>
 </html>

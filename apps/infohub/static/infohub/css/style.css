@@ -23,3 +23,10 @@ table{
   color: black;
   background-color:yellow;
 }
+i{
+  /*Controls the loading spinner*/
+  opacity: 0.2;
+}
+#loader{
+  margin-left: 200px;
+}

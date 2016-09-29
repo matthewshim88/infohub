@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from .models import InfoSource, Audit
 from ..login_reg.models import User
 from django.contrib import messages
+from django.http import HttpResponse
 
 import time
 import urllib2
@@ -18,14 +19,27 @@ def index(request):
     # User is logged in.
     userID = request.session['userID']
 
-    # Get stories from all user configured sources
-    stories = sources.getInfo(userID)
     context = {
         "first_name" : User.objects.get(id = userID).first_name,
-        "stories" : stories
+        "stories" : []
     }
 
     return render(request, 'infohub/index.html', context)
+
+# Get the articles for the user's selected sources.
+def getInfo(request):
+    print "DEBUG: Entering getInfo"
+    if "userID" not in request.session:
+        # Prevent user from going to the success page if not logged in.
+        return redirect(reverse('useradmin:index'))
+
+    user_id = request.session['userID']
+    stories = sources.getInfo(user_id)
+    context = {
+        "first_name" : user_id,
+        "stories" : stories
+    }
+    return HttpResponse(json.dumps(stories), content_type = "application/json")
 
 # Runs unit tests and retrieves audit history for the admin portal.
 def adminPortal(request):

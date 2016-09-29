@@ -17,15 +17,19 @@ def getInfo(user_id):
     # First get the user sources from the database. Only retrieve active sources.
     user_sources = InfoSource.objects.getActive(user_id)
 
+    # Debugging settings
+    BING_ENABLED = True;
+    CNN_ENABLED = True;
+    NPR_ENABLED = True;
+
     # Loop and retrieve data from each source
     stories = []
     for source in user_sources:
-        if source.source_type == "api" and source.location == "Bing":
+        if source.source_type == "api" and source.location == "Bing" and BING_ENABLED:
             stories.extend(getInfoBing(user_id, source.max_snippets, source.highlight_text))
-            pass
-        elif source.source_type == "api" and source.location == "CNN":
+        elif source.source_type == "api" and source.location == "CNN" and CNN_ENABLED:
             stories.extend(getInfoCNN(user_id, source.max_snippets, source.highlight_text))
-        elif source.source_type == "api" and source.location == "NPR":
+        elif source.source_type == "api" and source.location == "NPR" and NPR_ENABLED:
             stories.extend(getInfoNPR(user_id, source.max_snippets, source.highlight_text))
 
     # We have hit all the sources. Return the data.

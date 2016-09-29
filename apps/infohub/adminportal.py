@@ -145,18 +145,18 @@ def runTests(user_id):
     #     "highlight_text" : "Trump"
     # }
 
-    # Add an info source
+    #Add an info source
     # time_start = time.time()
     # result = InfoSource.objects.add(data, user_id)
 
-    # Temporary code to insert CNN as source until this can be done in the UI.
+    #Temporary code to insert CNN as source until this can be done in the UI.
     # data = {
     #     "source_type": "api",
     #     "location" : "NPR",
     #     "highlight_text" : "Trump"
     # }
 
-    # Add an info source
+    #Add an info source
     # time_start = time.time()
     # result = InfoSource.objects.add(data, user_id)
 
