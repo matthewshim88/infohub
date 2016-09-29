@@ -1,6 +1,11 @@
 *{
   /*outline: 1px dotted solid black;*/
 }
+#alert{
+  color: red;
+  text-align: right;
+  padding-right: 15px;
+}
 i{
   /*Controls the loading spinner*/
   opacity: 0.2;
