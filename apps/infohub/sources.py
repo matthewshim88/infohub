@@ -73,14 +73,19 @@ def getInfoCNN(user_id, max_snippets, highlight_text):
 
     # Parse the content and normalize into InfoHub format.
     stories = []
+    previous_title = ""
     for story in content["articles"][:max_snippets]:
-        stories.append({
-            "source" : "CNN News", # Displaying the source is required by CNN if site is public.
-            "title" : story["title"],
-            "url" : story["url"],
-            "description" : story["description"],
-            "highlight_text" : highlight_text
-        })
+        # NOTE: CNN returns the first story twice (likely bug on their side),
+        # so we exlicitely check for that and ignore dupes.
+        if story["title"] != previous_title:
+            stories.append({
+                "source" : "CNN News", # Displaying the source is required by CNN if site is public.
+                "title" : story["title"],
+                "url" : story["url"],
+                "description" : story["description"],
+                "highlight_text" : highlight_text
+            })
+            previous_title = story["title"]
 
     Audit.objects.audit(user_id, "Retrieved info from CNN")
     return stories
