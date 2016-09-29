@@ -70,7 +70,6 @@ def getInfoCNN(user_id, max_snippets, highlight_text):
     req = urllib2.Request(url)
     resp = urllib2.urlopen(req)
     content = json.load(resp)
-    print content
 
     # Parse the content and normalize into InfoHub format.
     stories = []
