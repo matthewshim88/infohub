@@ -34,7 +34,9 @@ def index(request):
         "first_name" : User.objects.get(id = userID).first_name,
         "stories" : [],
         "city": User.objects.get(id=userID).city,
-        "weather" : current_weather,
+        "weather_status" : current_weather[2],
+        "weather_temp" : current_weather[3],
+        "weather_humidity" : current_weather[4],
         "coords" : [current_weather[5], current_weather[6]]
     }
 
