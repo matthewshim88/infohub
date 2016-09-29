@@ -24,8 +24,14 @@ def index(request):
     stories = sources.getInfo(userID)
 
     #questionable....maybe use session? Up for discussion
-    current_weather = weather.getWeather(User.objects.get(id=userID).city)
-
+    current_weather = {}
+    try:
+        current_weather = weather.getWeather(User.objects.get(id=userID).city)
+    except Exception as e:
+        # This might fail due to an API key issue.
+        # Ignoring errors for now.
+        pass;
+    
     context = {
         "first_name" : User.objects.get(id = userID).first_name,
         "stories" : stories,
