@@ -13,6 +13,12 @@ i{
 #loader {
   /*margin-left: 200px;*/
 }
+.thumbnail{
+  width: 65px;
+  height: 50px;
+  float: left;
+  padding: 0 10px 10px 0;
+}
 body{
     font-family: sans-serif;
 }
@@ -36,7 +42,8 @@ table{
 }
 .highlight_text{
   color: black;
-  background-color:yellow;
+  background-color:rgb(248,148,6);
+  border-radius: 3px;
 }
 /*####################*/
 /*## steve's styles ##*/

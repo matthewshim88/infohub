@@ -51,6 +51,14 @@ $(document).ready(
               var html = "<a target='_blank' href=" + stories[location][i].url + ">" + stories[location][i].title + "</a>";
               html += "<p>";
 
+              // Add thumbnail
+              image = stories[location][i].image;
+              if(image.length === 0 && location === "NPR")
+                // Get the default NPR image from a hidden img tag if NPR didn't provide one.
+                image = $('#npr_def_img').attr('src');
+
+              html += "<img class='thumbnail' src='" + image + "'>";
+
               // Highlight each specified keyword.
               var finalDescription = stories[location][i].description;
               var description_length = finalDescription.length;
