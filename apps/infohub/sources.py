@@ -27,7 +27,6 @@ def getInfo(user_id):
     for source in user_sources:
         if source.source_type == "api" and source.location == "Bing" and BING_ENABLED:
             stories["Bing"] = getInfoBing(user_id, source.max_snippets, source.highlight_text)
-            pass
         elif source.source_type == "api" and source.location == "CNN" and CNN_ENABLED:
             stories["CNN"] = getInfoCNN(user_id, source.max_snippets, source.highlight_text)
         elif source.source_type == "api" and source.location == "NPR" and NPR_ENABLED:
