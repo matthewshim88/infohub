@@ -26,11 +26,17 @@ def getInfo(user_id):
     stories = {}
     for source in user_sources:
         if source.source_type == "api" and source.location == "Bing" and BING_ENABLED:
-            stories["Bing"] = getInfoBing(user_id, source.max_snippets, source.highlight_text)
+            recentStories = getInfoBing(user_id, source.max_snippets, source.highlight_text)
+            if len(recentStories) > 0:
+                stories["Bing"] = recentStories
         elif source.source_type == "api" and source.location == "CNN" and CNN_ENABLED:
-            stories["CNN"] = getInfoCNN(user_id, source.max_snippets, source.highlight_text)
+            recentStories = getInfoCNN(user_id, source.max_snippets, source.highlight_text)
+            if len(recentStories) > 0:
+                stories["CNN"]  = recentStories
         elif source.source_type == "api" and source.location == "NPR" and NPR_ENABLED:
-            stories["NPR"] = getInfoNPR(user_id, source.max_snippets, source.highlight_text)
+            recentStories = getInfoNPR(user_id, source.max_snippets, source.highlight_text)
+            if len(recentStories) > 0:
+                stories["NPR"] = recentStories
 
     # We have hit all the sources. Return the data.
     return stories
@@ -43,8 +49,15 @@ def getInfoBing(user_id, max_snippets, highlight_text):
     api_key = "5f3b95abf31f452f8a3c4cb27a2d39f7"
     req = urllib2.Request(url)
     req.add_header('Ocp-Apim-Subscription-Key', api_key)
-    resp = urllib2.urlopen(req)
-    content = json.load(resp)
+
+    content = None
+    try:
+        resp = urllib2.urlopen(req)
+        content = json.load(resp)
+    except Exception as e:
+        print "DEBUG: urlopen failed for Bing"
+        Audit.objects.audit(user_id, "Failed to retrieve info from Bing")
+        return []
 
     # Parse the content and normalize into InfoHub format.
     stories = []
@@ -54,7 +67,8 @@ def getInfoBing(user_id, max_snippets, highlight_text):
             "title" : story["name"],
             "url" : story["url"],
             "description" : story["description"],
-            "highlight_text" : highlight_text
+            "highlight_text" : highlight_text,
+            "image" : story["image"]["thumbnail"]["contentUrl"]
         })
 
     Audit.objects.audit(user_id, "Retrieved info from Bing")
@@ -68,13 +82,20 @@ def getInfoCNN(user_id, max_snippets, highlight_text):
     api_key = "f2666e6b10934fb29ebb6849581ab509"
     url = base_url + "&apiKey=" + api_key
     req = urllib2.Request(url)
-    resp = urllib2.urlopen(req)
-    content = json.load(resp)
+
+    content = None
+    try:
+        resp = urllib2.urlopen(req)
+        content = json.load(resp)
+    except Exception as e:
+        print "DEBUG: urlopen failed for CNN"
+        Audit.objects.audit(user_id, "Failed to retrieve info from CNN")
+        return []
 
     # Parse the content and normalize into InfoHub format.
     stories = []
     previous_title = ""
-    for story in content["articles"][:max_snippets]:
+    for story in content["articles"][:max_snippets + 1]: # Account for dupe stories per 9/29/2016
         # NOTE: CNN returns the first story twice (likely bug on their side),
         # so we exlicitely check for that and ignore dupes.
         if story["title"] != previous_title:
@@ -83,7 +104,8 @@ def getInfoCNN(user_id, max_snippets, highlight_text):
                 "title" : story["title"],
                 "url" : story["url"],
                 "description" : story["description"],
-                "highlight_text" : highlight_text
+                "highlight_text" : highlight_text,
+                "image" : story["urlToImage"]
             })
             previous_title = story["title"]
 
@@ -97,17 +119,32 @@ def getInfoNPR(user_id, max_snippets, highlight_text):
     api_key = "MDI2ODkyNTcxMDE0NzQ5MzUxMTMxN2M1ZA000"
     url = base_url + "&apiKey=" + api_key
     req = urllib2.Request(url)
-    resp = urllib2.urlopen(req)
-    content = json.load(resp)
+
+    content = None
+    try:
+        resp = urllib2.urlopen(req)
+        content = json.load(resp)
+    except Exception as e:
+        print "DEBUG: urlopen failed for NPR"
+        Audit.objects.audit(user_id, "Failed to retrieve info from NPR")
+        return []
 
     stories = []
     for story in content["list"]["story"][:max_snippets]:
+        # NPR doesn't always send images, so use static image
+        # if we can't find one in the response.
+        # The static image is set in Javascript client side.
+        image = ""
+        if "image" in story and len(story["image"]) > 0 and "src" in story["image"][0]:
+            image = story["image"][0]["src"]
+
         stories.append({
             "source" : "NPR",
             "title" : story["title"]["$text"],
             "url" : story["link"][0]["$text"],
             "description" : story["teaser"]["$text"],
-            "highlight_text" : highlight_text
+            "highlight_text" : highlight_text,
+            "image" : image
         })
 
     Audit.objects.audit(user_id, "Retrieved info from NPR")

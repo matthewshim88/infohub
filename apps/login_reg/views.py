@@ -25,9 +25,7 @@ def register(request):
         # Registration succeeded. Consider the new user logged in at this point.
         request.session['userID'] = result["user"].id
         request.session['userCity'] = result["user"].city
-        # Include below if there is a need to differenciate between registration and login.
-        #messages.success(request, "registered")
-        return redirect(reverse('useradmin:success'))
+        return redirect(reverse('info:show_profile'))
     return redirect(reverse('useradmin:index'))
 
 # Logs in an existing user.
