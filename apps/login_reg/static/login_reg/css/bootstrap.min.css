@@ -54,6 +54,5 @@
     background-color: rgb(255,17,34);
     border-radius:10px;
     overflow:scroll;
-    display:inline-block;
     font-weight:bold;
   }
